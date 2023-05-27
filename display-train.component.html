@@ -1,0 +1,70 @@
+<head>
+    <style>
+        .train-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .train-price {
+            font-weight: bold;
+            color: #ff5722;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center mb-3">Train</h1>
+        <div class="search-box">
+            <input type="text" class="input" id="TrainName" name="TrainName" placeholder="Search Train By Name" [(ngModel)]="searchTerm">
+            <button type="submit" class="search-button" (click)="searchTrains()">Search</button>
+            <button type="submit" class="search-button" (click)="reset()">Reset</button>
+        </div>
+
+        <div class="train-list">
+            <div class="row" *ngIf="trainsDisplay && trainsDisplay.length > 0">
+                <div class="col-md-4" *ngFor="let train of trainsDisplay; let i=index">
+                    <div class="card train-card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ train.TrainName }}</h5>
+                            <div class="card-text">
+                                <div class="train-detail">
+                                    <label class="train-label">Train Number:</label>
+                                    <span>{{ train.TrainId }}</span>
+                                </div>
+                                <div class="train-detail">
+                                    <label class="train-label">From:</label>
+                                    <span>{{ train.Origin }}</span>
+                                </div>
+                                <div class="train-detail">
+                                    <label class="train-label">To:</label>
+                                    <span>{{ train.Destination }}</span>
+                                </div>
+                                <div class="train-detail">
+                                    <label class="train-label">Departure Time:</label>
+                                    <span>{{ train.Departure | date: 'medium' }}</span>
+                                </div>
+                                <div class="train-detail">
+                                    <label class="train-label">Arrival Time:</label>
+                                    <span>{{ train.Arrival | date: 'medium' }}</span>
+                                </div>
+                                <div class="train-detail">
+                                    <label class="train-label">Seat Capacity:</label>
+                                    <span>{{ train.SeatCapacity }}</span>
+                                </div>
+                                <div class="train-detail">
+                                    <label class="train-label">Price:</label>
+                                    <span class="train-price">&#x20B9;{{ train.SeatRate }}</span>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-info" [routerLink]="['/train','edit',train.Id]">Book</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="no-train-text" *ngIf="!trainsDisplay || trainsDisplay.length <= 0">No Train Found</p>
+        </div>
+    </div>
+</body>
